@@ -1,0 +1,9 @@
+{
+  "name": "ozburns-family-tree",
+  "version": "1.0.0",
+  "description": "Interactive family tree with relationship calculator",
+  "private": true,
+  "scripts": {
+    "start": "npx http-server -p 8080 -o -c-1"
+  }
+}

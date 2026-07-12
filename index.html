@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ozburn Family Tree</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Ozburn Family Tree</h1>
+      <p class="subtitle">Tap two names to see how they're related</p>
+    </header>
+
+    <div id="selection-status" class="selection-status" aria-live="polite">
+      <p id="status-text">Select a first person</p>
+      <button id="clear-btn" class="clear-btn hidden" aria-label="Clear selection">Start Over</button>
+    </div>
+
+    <div class="tree-scroll-wrapper">
+      <div id="tree-container" class="tree-container" role="listbox" aria-label="Family members">
+        <svg id="svg-lines" class="svg-lines"></svg>
+      </div>
+    </div>
+
+    <div id="result" class="result hidden" aria-live="polite" aria-atomic="true">
+      <p id="result-text"></p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
+  <script src="js/relationship.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

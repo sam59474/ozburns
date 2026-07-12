@@ -1,0 +1,155 @@
+{
+  "people": [
+    {
+      "id": "etc",
+      "name": "Ozburn",
+      "gender": "M",
+      "born": null,
+      "died": null,
+      "parents": []
+    },
+    {
+      "id": "mike-ozburn",
+      "name": "Mike Ozburn",
+      "gender": "M",
+      "born": null,
+      "died": null,
+      "parents": ["etc"]
+    },
+    {
+      "id": "kris-rosenlund-ozburn",
+      "name": "Kris Rosenlund Ozburn",
+      "gender": "F",
+      "born": null,
+      "died": null,
+      "parents": []
+    },
+    {
+      "id": "mark-ozburn",
+      "name": "Mark Ozburn",
+      "gender": "M",
+      "born": null,
+      "died": null,
+      "parents": ["etc"]
+    },
+    {
+      "id": "margaret-ozburn-mixon",
+      "name": "Margaret Ozburn Mixon",
+      "gender": "F",
+      "born": 1962,
+      "died": null,
+      "parents": ["etc"]
+    },
+    {
+      "id": "ron-mixon",
+      "name": "Ron Mixon",
+      "gender": "M",
+      "born": 1963,
+      "died": null,
+      "parents": []
+    },
+    {
+      "id": "ashley-ozburn",
+      "name": "Ashley Ozburn",
+      "gender": "F",
+      "born": null,
+      "died": null,
+      "parents": ["mike-ozburn", "kris-rosenlund-ozburn"]
+    },
+    {
+      "id": "andrew-patterson",
+      "name": "Andrew Patterson",
+      "gender": "M",
+      "born": null,
+      "died": null,
+      "parents": []
+    },
+    {
+      "id": "katie-ozburn-patterson",
+      "name": "Katie Ozburn Patterson",
+      "gender": "F",
+      "born": null,
+      "died": null,
+      "parents": ["mike-ozburn", "kris-rosenlund-ozburn"]
+    },
+    {
+      "id": "ross-ozburn",
+      "name": "Ross Ozburn",
+      "gender": "M",
+      "born": null,
+      "died": null,
+      "parents": ["mike-ozburn", "kris-rosenlund-ozburn"]
+    },
+    {
+      "id": "amy-ozburn",
+      "name": "Amy Ozburn",
+      "gender": "F",
+      "born": null,
+      "died": null,
+      "parents": []
+    },
+    {
+      "id": "sam-mixon",
+      "name": "Sam Mixon",
+      "gender": "M",
+      "born": 1996,
+      "died": null,
+      "parents": ["margaret-ozburn-mixon", "ron-mixon"]
+    },
+    {
+      "id": "luke-mixon",
+      "name": "Luke Mixon",
+      "gender": "M",
+      "born": 1997,
+      "died": null,
+      "parents": ["margaret-ozburn-mixon", "ron-mixon"]
+    },
+    {
+      "id": "kendall-ciancia-mixon",
+      "name": "Kendall Ciancia Mixon",
+      "gender": "F",
+      "born": 1997,
+      "died": null,
+      "parents": []
+    },
+    {
+      "id": "peti-ozburn",
+      "name": "Child",
+      "gender": null,
+      "born": null,
+      "died": null,
+      "parents": ["ashley-ozburn"]
+    },
+    {
+      "id": "baby-1",
+      "name": "Child",
+      "gender": null,
+      "born": null,
+      "died": null,
+      "parents": ["andrew-patterson", "katie-ozburn-patterson"]
+    },
+    {
+      "id": "baby-2",
+      "name": "Child",
+      "gender": null,
+      "born": null,
+      "died": null,
+      "parents": ["andrew-patterson", "katie-ozburn-patterson"]
+    },
+    {
+      "id": "mary-nash-ozburn",
+      "name": "Child",
+      "gender": null,
+      "born": null,
+      "died": null,
+      "parents": ["ross-ozburn", "amy-ozburn"]
+    }
+  ],
+  "marriages": [
+    { "partners": ["mike-ozburn", "kris-rosenlund-ozburn"] },
+    { "partners": ["margaret-ozburn-mixon", "ron-mixon"] },
+    { "partners": ["andrew-patterson", "katie-ozburn-patterson"] },
+    { "partners": ["ross-ozburn", "amy-ozburn"] },
+    { "partners": ["luke-mixon", "kendall-ciancia-mixon"] }
+  ]
+}

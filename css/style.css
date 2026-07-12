@@ -1,0 +1,266 @@
+/* Reset & base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-bg: #f8f6f3;
+  --color-surface: #ffffff;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-line: #333333;
+  --color-selected-a: #F56600;
+  --color-selected-a-bg: #fff3e0;
+  --color-selected-b: #522D80;
+  --color-selected-b-bg: #f3e5f5;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  margin: 0 auto;
+  padding: 1rem 0.75rem 2rem;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+header h1 {
+  font-size: 1.4rem;
+  color: var(--color-text);
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+}
+
+/* Result card */
+.result {
+  background: var(--color-surface);
+  border: 2px solid var(--color-text);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.5rem;
+  margin: 0.75rem auto 0;
+  text-align: center;
+  box-shadow: var(--shadow);
+  animation: slideDown 0.25s ease-out;
+  width: fit-content;
+  max-width: 90%;
+}
+
+.result.hidden {
+  display: none;
+}
+
+.result p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.result .name-a {
+  color: var(--color-selected-a);
+}
+
+.result .name-b {
+  color: var(--color-selected-b);
+}
+
+/* Selection status */
+.selection-status {
+  text-align: center;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.selection-status p {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+.selection-status .has-selection {
+  color: var(--color-text);
+}
+
+.selection-status .clear-btn {
+  display: inline;
+  padding: 0;
+  margin-left: 0.25em;
+  background: none;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  border: none;
+}
+
+.selection-status .clear-btn:hover {
+  color: var(--color-selected-a);
+}
+
+.selection-status .clear-btn.hidden {
+  display: none;
+}
+
+/* ==================== TREE LAYOUT ==================== */
+
+.tree-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1rem;
+}
+
+.tree-container {
+  position: relative;
+  margin: 0 auto;
+}
+
+/* SVG line layer */
+.svg-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.svg-lines line {
+  stroke: var(--color-line);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.svg-lines .line-marriage {
+  stroke: var(--color-line);
+  stroke-width: 2;
+}
+
+.svg-lines .line-parent {
+  stroke: var(--color-line);
+  stroke-width: 2;
+}
+
+.svg-lines .line-sibling {
+  stroke: var(--color-text-light);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 2;
+}
+
+/* ==================== PERSON CARDS ==================== */
+
+.person-card {
+  position: absolute;
+  background: var(--color-surface);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow);
+  user-select: none;
+  -webkit-user-select: none;
+  text-align: center;
+  width: 110px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.person-card:hover {
+  border-color: var(--color-text-light);
+  z-index: 2;
+}
+
+.person-card:active {
+  transform: scale(0.97);
+}
+
+.person-card.selected-a {
+  background: var(--color-selected-a-bg);
+  border-color: var(--color-selected-a);
+  box-shadow: 0 0 0 3px rgba(245, 102, 0, 0.2);
+  z-index: 3;
+}
+
+.person-card.selected-b {
+  background: var(--color-selected-b-bg);
+  border-color: var(--color-selected-b);
+  box-shadow: 0 0 0 3px rgba(82, 45, 128, 0.2);
+  z-index: 3;
+}
+
+.person-card .person-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.person-card .person-years {
+  font-size: 0.62rem;
+  color: var(--color-text-light);
+  margin-top: 0.1rem;
+}
+
+/* Focus styles for accessibility */
+.person-card:focus-visible {
+  outline: 3px solid var(--color-selected-a);
+  outline-offset: 2px;
+}
+
+.selection-status .clear-btn:focus-visible {
+  outline: 3px solid var(--color-selected-a);
+  outline-offset: 2px;
+}
+
+/* Animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 500px) {
+  .app {
+    padding: 1rem 0.5rem 2rem;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+}
