@@ -1,12 +1,92 @@
 {
   "people": [
     {
-      "id": "etc",
-      "name": "Ozburn",
+      "id": "john-logan",
+      "name": "John Logan",
       "gender": "M",
       "born": null,
       "died": null,
       "parents": []
+    },
+    {
+      "id": "elizabeth-pharrell-logan",
+      "name": "Elizabeth Pharrell Logan",
+      "gender": "F",
+      "born": null,
+      "died": null,
+      "parents": []
+    },
+    {
+      "id": "dr-john-logan",
+      "name": "Dr. John Logan",
+      "gender": "M",
+      "born": 1788,
+      "died": 1853,
+      "parents": ["john-logan", "elizabeth-pharrell-logan"]
+    },
+    {
+      "id": "philip-davis",
+      "name": "Philip Davis",
+      "gender": "M",
+      "born": 1797,
+      "died": 1841,
+      "parents": []
+    },
+    {
+      "id": "margaret-logan-davis-phelps",
+      "name": "Margaret Logan Davis Phelps",
+      "gender": "F",
+      "born": 1803,
+      "died": 1893,
+      "parents": ["john-logan", "elizabeth-pharrell-logan"]
+    },
+    {
+      "id": "james-f-ozburn",
+      "name": "James F. Ozburn",
+      "gender": "M",
+      "born": 1816,
+      "died": 1887,
+      "parents": []
+    },
+    {
+      "id": "general-john-a-logan",
+      "name": "General John A. Logan",
+      "gender": "M",
+      "born": 1826,
+      "died": 1886,
+      "parents": ["dr-john-logan"]
+    },
+    {
+      "id": "sarah-e-davis-ozburn",
+      "name": "Sarah E. Davis Ozburn",
+      "gender": "F",
+      "born": 1830,
+      "died": 1871,
+      "parents": ["philip-davis", "margaret-logan-davis-phelps"]
+    },
+    {
+      "id": "william-w-ozburn",
+      "name": "William W. Ozburn",
+      "gender": "M",
+      "born": 1866,
+      "died": 1945,
+      "parents": ["james-f-ozburn", "sarah-e-davis-ozburn"]
+    },
+    {
+      "id": "ross-j-ozburn",
+      "name": "Ross J. Ozburn",
+      "gender": "M",
+      "born": 1900,
+      "died": 1966,
+      "parents": ["william-w-ozburn"]
+    },
+    {
+      "id": "bill-ozburn",
+      "name": "Bill Ozburn",
+      "gender": "M",
+      "born": 1935,
+      "died": 2019,
+      "parents": ["ross-j-ozburn"]
     },
     {
       "id": "mike-ozburn",
@@ -14,7 +94,7 @@
       "gender": "M",
       "born": null,
       "died": null,
-      "parents": ["etc"]
+      "parents": ["bill-ozburn"]
     },
     {
       "id": "kris-rosenlund-ozburn",
@@ -30,7 +110,7 @@
       "gender": "M",
       "born": null,
       "died": null,
-      "parents": ["etc"]
+      "parents": ["bill-ozburn"]
     },
     {
       "id": "margaret-ozburn-mixon",
@@ -38,7 +118,7 @@
       "gender": "F",
       "born": 1962,
       "died": null,
-      "parents": ["etc"]
+      "parents": ["bill-ozburn"]
     },
     {
       "id": "ron-mixon",
@@ -146,6 +226,9 @@
     }
   ],
   "marriages": [
+    { "partners": ["john-logan", "elizabeth-pharrell-logan"] },
+    { "partners": ["philip-davis", "margaret-logan-davis-phelps"] },
+    { "partners": ["james-f-ozburn", "sarah-e-davis-ozburn"] },
     { "partners": ["mike-ozburn", "kris-rosenlund-ozburn"] },
     { "partners": ["margaret-ozburn-mixon", "ron-mixon"] },
     { "partners": ["andrew-patterson", "katie-ozburn-patterson"] },
