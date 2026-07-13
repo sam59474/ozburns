@@ -46,7 +46,7 @@
 
     // === Gen 7: Joe's kids, Bill's kids ===
     { "x": -5, "id": "joe-ozburn-jr", "name": "Joe Ozburn", "gender": "M", "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
-    { "x": -4, "id": "gay-showalter", "name": "Gay Showalter", "gender": "F", "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
+    { "x": -4, "id": "gay-showalter", "name": "Gay Showalter", "gender": null, "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
     { "x": -3, "id": "linda-wade", "name": "Linda Wade", "gender": "F", "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
     { "x": -2, "id": "tim-ozburn", "name": "Tim Ozburn", "gender": "M", "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
     { "x": -1, "id": "pat-ozburn", "name": "Pat Ozburn", "gender": null, "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
