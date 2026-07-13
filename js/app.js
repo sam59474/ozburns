@@ -16,10 +16,10 @@
   let familyData = null;
 
   const CARD_W = 110;
-  const CARD_H = 48;
+  const CARD_H = 62;
   const COUPLE_GAP = 10;
   const SIBLING_GAP = 16;
-  const RANK_SEP = 90;
+  const RANK_SEP = 110;
 
   // Load family data
   try {

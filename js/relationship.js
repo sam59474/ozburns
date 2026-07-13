@@ -330,13 +330,13 @@ class FamilyGraph {
       // Direct line aunt/uncle or niece/nephew
       if (distA < distB) {
         // B is further from common ancestor = B is a niece/nephew
-        const base = personB.gender === "M" ? "nephew" : personB.gender === "F" ? "niece" : "niece/nephew";
+        const base = personB.gender === "M" ? "nephew" : personB.gender === "F" ? "niece" : "nibling";
         if (removal === 1) return base;
         if (removal === 2) return "great-" + base;
         return "great-".repeat(removal - 1) + base;
       } else {
         // A is further from common ancestor = B is an aunt/uncle
-        const base = personB.gender === "M" ? "uncle" : personB.gender === "F" ? "aunt" : "aunt/uncle";
+        const base = personB.gender === "M" ? "uncle" : personB.gender === "F" ? "aunt" : "pibling";
         if (removal === 1) return base;
         if (removal === 2) return "great-" + base;
         return "great-".repeat(removal - 1) + base;
@@ -380,6 +380,11 @@ class FamilyGraph {
   timesRemoved(n) {
     if (n === 1) return "once removed";
     if (n === 2) return "twice removed";
+    const words = [
+      "", "", "", "thrice", "four times", "five times",
+      "six times", "seven times", "eight times", "nine times", "ten times"
+    ];
+    if (n < words.length) return `${words[n]} removed`;
     return `${n} times removed`;
   }
 
@@ -412,17 +417,17 @@ class FamilyGraph {
     }
 
     // Aunts/uncles-in-law
-    if (relationship === "uncle" || relationship === "aunt" || relationship === "aunt/uncle") {
+    if (relationship === "uncle" || relationship === "aunt" || relationship === "pibling") {
       if (g === "M") return "uncle (by marriage)";
       if (g === "F") return "aunt (by marriage)";
-      return "aunt/uncle (by marriage)";
+      return "pibling (by marriage)";
     }
 
     // Nieces/nephews-in-law
-    if (relationship === "nephew" || relationship === "niece" || relationship === "niece/nephew") {
+    if (relationship === "nephew" || relationship === "niece" || relationship === "nibling") {
       if (g === "M") return "nephew (by marriage)";
       if (g === "F") return "niece (by marriage)";
-      return "niece/nephew (by marriage)";
+      return "nibling (by marriage)";
     }
 
     // Everything else (great-aunts, cousins, etc.)

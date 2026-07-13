@@ -188,8 +188,7 @@ header h1 {
   -webkit-user-select: none;
   text-align: center;
   width: 110px;
-  min-height: 48px;
-  height: auto;
+  height: 62px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -220,21 +219,16 @@ header h1 {
 }
 
 .person-card .person-name {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   color: var(--color-text);
   line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
 }
 
 .person-card .person-years {
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   color: var(--color-text-light);
-  margin-top: 0.1rem;
+  margin-top: 0.15rem;
 }
 
 /* Focus styles for accessibility */
