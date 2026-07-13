@@ -65,10 +65,10 @@
     { "x": 5, "id": "kendall-ciancia-mixon", "name": "Kendall Ciancia Mixon", "gender": "F", "born": 1997, "died": null, "parents": [] },
 
     // === Gen 9: Great-grandkids ===
-    { "x": -2, "id": "peti-ozburn", "name": "Child", "gender": null, "born": null, "died": null, "parents": ["ashley-ozburn"] },
+    { "x": -2, "id": "peti-ozburn", "name": "Peti Ozburn", "gender": null, "born": null, "died": null, "parents": ["ashley-ozburn"] },
     { "x": -1, "id": "baby-1", "name": "Child", "gender": null, "born": null, "died": null, "parents": ["andrew-patterson", "katie-ozburn-patterson"] },
     { "x": 0, "id": "baby-2", "name": "Child", "gender": null, "born": null, "died": null, "parents": ["andrew-patterson", "katie-ozburn-patterson"] },
-    { "x": 1.5, "id": "mary-nash-ozburn", "name": "Child", "gender": null, "born": null, "died": null, "parents": ["ross-ozburn", "amy-ozburn"] }
+    { "x": 1.5, "id": "mary-nash-ozburn", "name": "Mary Nash Ozburn", "gender": null, "born": null, "died": null, "parents": ["ross-ozburn", "amy-ozburn"] }
   ],
   "marriages": [
     { "partners": ["james-culbertson", "jane-culbertson"] },

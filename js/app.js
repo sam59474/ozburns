@@ -336,7 +336,11 @@
   }
 
   function showResult(nameA, nameB, relationship) {
-    resultTextEl.innerHTML = `<span class="name-b">${nameB}</span> is <span class="name-a">${nameA}</span>'s ${relationship}`;
+    if (relationship === "not directly related") {
+      resultTextEl.innerHTML = `<span class="name-b">${nameB}</span> and <span class="name-a">${nameA}</span> are not directly related`;
+    } else {
+      resultTextEl.innerHTML = `<span class="name-b">${nameB}</span> is <span class="name-a">${nameA}</span>'s ${relationship}`;
+    }
     resultEl.classList.remove("hidden");
   }
 
