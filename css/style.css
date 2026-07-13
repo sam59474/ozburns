@@ -11,10 +11,10 @@
   --color-text: #333333;
   --color-text-light: #666666;
   --color-line: #333333;
-  --color-selected-a: #F56600;
-  --color-selected-a-bg: #fff3e0;
-  --color-selected-b: #522D80;
-  --color-selected-b-bg: #f3e5f5;
+  --color-selected-a: #522D80;
+  --color-selected-a-bg: #f3e5f5;
+  --color-selected-b: #F56600;
+  --color-selected-b-bg: #fff3e0;
   --radius: 10px;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
@@ -171,6 +171,12 @@ header h1 {
   stroke-width: 2;
 }
 
+.svg-lines .line-highlight {
+  stroke: var(--color-selected-b);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
 .svg-lines .line-sibling {
   stroke: var(--color-text-light);
   stroke-width: 1.5;
@@ -211,15 +217,21 @@ header h1 {
 .person-card.selected-a {
   background: var(--color-selected-a-bg);
   border-color: var(--color-selected-a);
-  box-shadow: 0 0 0 3px rgba(245, 102, 0, 0.2);
+  box-shadow: 0 0 0 3px rgba(82, 45, 128, 0.2);
   z-index: 3;
 }
 
 .person-card.selected-b {
   background: var(--color-selected-b-bg);
   border-color: var(--color-selected-b);
-  box-shadow: 0 0 0 3px rgba(82, 45, 128, 0.2);
+  box-shadow: 0 0 0 3px rgba(245, 102, 0, 0.2);
   z-index: 3;
+}
+
+.person-card.selected-path {
+  background: var(--color-surface);
+  border-color: var(--color-selected-b);
+  z-index: 2;
 }
 
 .person-card .person-name {

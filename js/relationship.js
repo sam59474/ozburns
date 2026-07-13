@@ -416,18 +416,20 @@ class FamilyGraph {
       return "child-in-law";
     }
 
-    // Aunts/uncles-in-law
-    if (relationship === "uncle" || relationship === "aunt" || relationship === "pibling") {
-      if (g === "M") return "uncle (by marriage)";
-      if (g === "F") return "aunt (by marriage)";
-      return "pibling (by marriage)";
+    // Aunts/uncles (including great-aunt, great-great-uncle, etc.)
+    if (relationship.includes("uncle") || relationship.includes("aunt") || relationship.includes("pibling")) {
+      const prefix = relationship.replace(/uncle|aunt|pibling/, "").trim();
+      if (g === "M") return prefix + "uncle (by marriage)";
+      if (g === "F") return prefix + "aunt (by marriage)";
+      return prefix + "pibling (by marriage)";
     }
 
-    // Nieces/nephews-in-law
-    if (relationship === "nephew" || relationship === "niece" || relationship === "nibling") {
-      if (g === "M") return "nephew (by marriage)";
-      if (g === "F") return "niece (by marriage)";
-      return "nibling (by marriage)";
+    // Nieces/nephews (including great-nephew, etc.)
+    if (relationship.includes("nephew") || relationship.includes("niece") || relationship.includes("nibling")) {
+      const prefix = relationship.replace(/nephew|niece|nibling/, "").trim();
+      if (g === "M") return prefix + "nephew (by marriage)";
+      if (g === "F") return prefix + "niece (by marriage)";
+      return prefix + "nibling (by marriage)";
     }
 
     // Everything else (great-aunts, cousins, etc.)
@@ -460,6 +462,8 @@ class FamilyGraph {
     const queue = [[idA]];
     visited.add(idA);
 
+    let rawPath = [];
+
     while (queue.length > 0) {
       const path = queue.shift();
       const current = path[path.length - 1];
@@ -469,11 +473,9 @@ class FamilyGraph {
 
       const person = this.people.get(current);
       if (person) {
-        // Parents
         for (const parentId of person.parents) {
           neighbors.push(parentId);
         }
-        // Children
         if (person.children) {
           for (const childId of person.children) {
             neighbors.push(childId);
@@ -481,7 +483,6 @@ class FamilyGraph {
         }
       }
 
-      // Spouse
       const spouse = this.getSpouse(current);
       if (spouse) {
         neighbors.push(spouse);
@@ -490,12 +491,54 @@ class FamilyGraph {
       for (const neighbor of neighbors) {
         if (visited.has(neighbor)) continue;
         const newPath = [...path, neighbor];
-        if (neighbor === idB) return newPath;
+        if (neighbor === idB) { rawPath = newPath; break; }
         visited.add(neighbor);
         queue.push(newPath);
       }
+      if (rawPath.length > 0) break;
     }
 
-    return [];
+    if (rawPath.length === 0) return [];
+
+    // Post-process: 
+    // 1. If someone on the path has a spouse who is a common ancestor of both endpoints, include them.
+    // 2. If the path goes child→parent→child (sibling connection), include the other parent too.
+    const ancestorsA = this.getAncestors(idA);
+    const ancestorsB = this.getAncestors(idB);
+    ancestorsA.set(idA, 0);
+    ancestorsB.set(idB, 0);
+
+    const expandedPath = [];
+    for (let i = 0; i < rawPath.length; i++) {
+      const id = rawPath[i];
+      expandedPath.push(id);
+
+      const spouse = this.getSpouse(id);
+      if (spouse && !rawPath.includes(spouse)) {
+        // Case 1: spouse is a common ancestor of both endpoints
+        if (ancestorsA.has(spouse) && ancestorsB.has(spouse)) {
+          expandedPath.push(spouse);
+          continue;
+        }
+
+        // Case 2: this person is a parent node in a sibling traversal
+        // (previous step came UP from a child, next step goes DOWN to another child)
+        const prevId = rawPath[i - 1];
+        const nextId = rawPath[i + 1];
+        if (prevId && nextId) {
+          const prevPerson = this.people.get(prevId);
+          const nextPerson = this.people.get(nextId);
+          if (prevPerson && nextPerson &&
+              prevPerson.parents.includes(id) &&
+              nextPerson.parents.includes(id) &&
+              nextPerson.parents.includes(spouse)) {
+            expandedPath.push(spouse);
+            continue;
+          }
+        }
+      }
+    }
+
+    return expandedPath;
   }
 }

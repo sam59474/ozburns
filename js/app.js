@@ -14,6 +14,7 @@
   let relationshipGraph = null;
   let selectedA = null;
   let familyData = null;
+  let currentPositions = null; // stored for path highlighting
 
   const CARD_W = 110;
   const CARD_H = 62;
@@ -44,6 +45,7 @@
     const marriages = familyData.marriages || [];
     const genMap = assignGenerations(people, marriages);
     const nodePositions = computePositions(people, marriages, genMap);
+    currentPositions = nodePositions;
     renderCards(nodePositions);
     drawConnections(nodePositions, marriages, people);
   }
@@ -327,11 +329,13 @@
       clearSelection();
     } else {
       clearSecondSelection();
+      clearHighlight();
       cardElement.classList.add("selected-b");
       const personA = relationshipGraph.getPerson(selectedA);
       const personB = relationshipGraph.getPerson(personId);
       const relationship = relationshipGraph.findRelationship(selectedA, personId);
       showResult(personA.name, personB.name, relationship);
+      highlightPath(selectedA, personId);
     }
   }
 
@@ -352,6 +356,7 @@
   function clearSelection() {
     selectedA = null;
     clearCardSelection();
+    clearHighlight();
     statusTextEl.textContent = "Select a first person";
     statusTextEl.classList.remove("has-selection");
     clearBtn.classList.add("hidden");
@@ -369,6 +374,167 @@
       card.classList.remove("selected-a", "selected-b");
       card.setAttribute("aria-selected", "false");
     }
+  }
+
+  function highlightPath(idA, idB) {
+    clearHighlight();
+    if (!currentPositions) return;
+    const path = relationshipGraph.findPath(idA, idB);
+    if (path.length < 2) return;
+
+    const marriages = familyData.marriages || [];
+    const people = familyData.people;
+
+    // Highlight intermediate cards
+    for (let i = 1; i < path.length - 1; i++) {
+      const card = treeContainer.querySelector(`[data-id="${path[i]}"]`);
+      if (card) card.classList.add("selected-path");
+    }
+
+    // For each step in the path, draw a highlight following the connector geometry
+    for (let i = 0; i < path.length - 1; i++) {
+      const fromId = path[i];
+      const toId = path[i + 1];
+      const fromPos = currentPositions.get(fromId);
+      const toPos = currentPositions.get(toId);
+      if (!fromPos || !toPos) continue;
+
+      // Check if this is a marriage link (same generation, married)
+      const areMarried = marriages.some(m =>
+        m.partners.includes(fromId) && m.partners.includes(toId)
+      );
+
+      if (areMarried) {
+        // Horizontal marriage line
+        const y = fromPos.y + CARD_H / 2;
+        const x1 = Math.min(fromPos.x, toPos.x) + CARD_W;
+        const x2 = Math.max(fromPos.x, toPos.x);
+        if (x2 > x1) drawHighlightLine(x1, y, x2, y);
+      } else {
+        // Parent-child link — figure out direction and draw the L-shape
+        const fromPerson = people.find(p => p.id === fromId);
+        const toPerson = people.find(p => p.id === toId);
+
+        let parentPos, childPos;
+        if (toPerson && toPerson.parents.includes(fromId)) {
+          parentPos = fromPos;
+          childPos = toPos;
+        } else if (fromPerson && fromPerson.parents.includes(toId)) {
+          parentPos = toPos;
+          childPos = fromPos;
+        } else {
+          // Siblings — route through their shared parent couple's bracket
+          const sharedParents = (fromPerson && toPerson) ?
+            fromPerson.parents.filter(pid => toPerson.parents.includes(pid)) : [];
+
+          if (sharedParents.length > 0) {
+            // Find the couple marriage for the shared parents
+            const siblingMarriage = marriages.find(m =>
+              sharedParents.some(pid => m.partners.includes(pid)) &&
+              m.partners.every(pid => fromPerson.parents.includes(pid) || toPerson.parents.includes(pid))
+            ) || marriages.find(m => sharedParents.some(pid => m.partners.includes(pid)));
+
+            if (siblingMarriage) {
+              const pos1 = currentPositions.get(siblingMarriage.partners[0]);
+              const pos2 = currentPositions.get(siblingMarriage.partners[1]);
+              if (pos1 && pos2) {
+                const marriageY = pos1.y + CARD_H / 2;
+                const parentMidX = (pos1.x + pos2.x + CARD_W) / 2;
+                const fromTopY = fromPos.y;
+                const bracketY = marriageY + (fromTopY - marriageY) * 0.5;
+                const fromMidX = fromPos.x + CARD_W / 2;
+                const toMidX = toPos.x + CARD_W / 2;
+
+                // Up from "from" to bracket
+                drawHighlightLine(fromMidX, fromTopY, fromMidX, bracketY);
+                // Across bracket to "to"
+                drawHighlightLine(fromMidX, bracketY, toMidX, bracketY);
+                // Down to "to"
+                drawHighlightLine(toMidX, bracketY, toMidX, toPos.y);
+                continue;
+              }
+            }
+          }
+
+          // Final fallback: just connect centers
+          drawHighlightLine(
+            fromPos.x + CARD_W / 2, fromPos.y + CARD_H / 2,
+            toPos.x + CARD_W / 2, toPos.y + CARD_H / 2
+          );
+          continue;
+        }
+
+        // Find the couple that connects parent to child
+        const parentId = parentPos === fromPos ? fromId : toId;
+        const childId = parentPos === fromPos ? toId : fromId;
+        const parentPerson = people.find(p => p.id === parentId);
+        const childPerson = people.find(p => p.id === childId);
+
+        // Check if parent is part of a couple that is the child's parent couple
+        let coupleMarriage = null;
+        if (childPerson && childPerson.parents.length === 2) {
+          coupleMarriage = marriages.find(m =>
+            m.partners.includes(childPerson.parents[0]) &&
+            m.partners.includes(childPerson.parents[1])
+          );
+        }
+
+        if (coupleMarriage) {
+          // Parent is part of a couple — highlight goes: parent center → marriage midpoint → bracket → child
+          const [cp1, cp2] = coupleMarriage.partners;
+          const pos1 = currentPositions.get(cp1);
+          const pos2 = currentPositions.get(cp2);
+          if (pos1 && pos2) {
+            const marriageY = pos1.y + CARD_H / 2;
+            const parentMidX = (pos1.x + pos2.x + CARD_W) / 2;
+            const childTopY = childPos.y;
+            const childMidX = childPos.x + CARD_W / 2;
+            const bracketY = marriageY + (childTopY - marriageY) * 0.5;
+
+            // From parent card center to marriage midpoint (horizontal)
+            const thisPX = parentPos.x + CARD_W / 2;
+            drawHighlightLine(thisPX, marriageY, parentMidX, marriageY);
+            // Down to bracket
+            drawHighlightLine(parentMidX, marriageY, parentMidX, bracketY);
+            // Across to child X
+            drawHighlightLine(parentMidX, bracketY, childMidX, bracketY);
+            // Down to child
+            drawHighlightLine(childMidX, bracketY, childMidX, childTopY);
+          }
+        } else {
+          // Single parent — L-shape
+          const px = parentPos.x + CARD_W / 2;
+          const py = parentPos.y + CARD_H;
+          const cx = childPos.x + CARD_W / 2;
+          const cy = childPos.y;
+          if (Math.abs(px - cx) < 2) {
+            drawHighlightLine(px, py, cx, cy);
+          } else {
+            const midY = py + (cy - py) * 0.5;
+            drawHighlightLine(px, py, px, midY);
+            drawHighlightLine(px, midY, cx, midY);
+            drawHighlightLine(cx, midY, cx, cy);
+          }
+        }
+      }
+    }
+  }
+
+  function drawHighlightLine(x1, y1, x2, y2) {
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    line.setAttribute("class", "line-highlight");
+    svgLayer.appendChild(line);
+  }
+
+  function clearHighlight() {
+    const existing = svgLayer.querySelectorAll(".line-highlight");
+    for (const el of existing) el.remove();
+    const pathCards = treeContainer.querySelectorAll(".selected-path");
+    for (const card of pathCards) card.classList.remove("selected-path");
   }
 
   clearBtn.addEventListener("click", () => {
