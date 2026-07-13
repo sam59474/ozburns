@@ -32,14 +32,17 @@
     { "x": 0.5, "id": "michael-moffett", "name": "Michael Moffett", "gender": "M", "born": null, "died": null, "parents": [] },
     { "x": 1.5, "id": "frances-bischof-moffett", "name": "Frances Bischof Moffett", "gender": "F", "born": null, "died": null, "parents": [] },
 
-    // === Gen 5: Ross+Mary Agnes ===
+    // === Gen 5: Ross+Mary Agnes, Gerald+Mae ===
     { "x": -1, "id": "ross-j-ozburn", "name": "Ross J. Ozburn", "gender": "M", "born": 1900, "died": 1966, "parents": ["william-w-ozburn", "nettie-catherine-wayman-ozburn"] },
     { "x": 1, "id": "mary-agnes-moffett-ozburn", "name": "Mary Agnes Moffett Ozburn", "gender": "F", "born": 1901, "died": 1994, "parents": ["michael-moffett", "frances-bischof-moffett"] },
+    { "x": 3.5, "id": "gerald-clayton-carter", "name": "Gerald Clayton Carter", "gender": "M", "born": null, "died": null, "parents": [] },
+    { "x": 4.5, "id": "mae-louise-meredith-carter", "name": "Mae Louise Meredith Carter", "gender": "F", "born": null, "died": null, "parents": [] },
 
-    // === Gen 6: Joe+Bernadine, Bill ===
+    // === Gen 6: Joe+Bernadine, Bill+Jerri ===
     { "x": -3, "id": "joe-ozburn", "name": "Joe Ozburn", "gender": "M", "born": 1929, "died": 2016, "parents": ["ross-j-ozburn", "mary-agnes-moffett-ozburn"] },
     { "x": -2, "id": "bernadine-ozburn", "name": "Bernadine Williams Ozburn", "gender": "F", "born": 1930, "died": 2023, "parents": [] },
     { "x": 3, "id": "bill-ozburn", "name": "Bill Ozburn", "gender": "M", "born": 1935, "died": 2019, "parents": ["ross-j-ozburn", "mary-agnes-moffett-ozburn"] },
+    { "x": 4, "id": "jerri-ozburn", "name": "Jerri Ozburn", "gender": "F", "born": 1937, "died": 2021, "parents": ["gerald-clayton-carter", "mae-louise-meredith-carter"] },
 
     // === Gen 7: Joe's kids, Bill's kids ===
     { "x": -5, "id": "joe-ozburn-jr", "name": "Joe Ozburn", "gender": "M", "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
@@ -48,10 +51,10 @@
     { "x": -2, "id": "tim-ozburn", "name": "Tim Ozburn", "gender": "M", "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
     { "x": -1, "id": "pat-ozburn", "name": "Pat Ozburn", "gender": null, "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
     { "x": 0, "id": "scott-ozburn", "name": "Scott Ozburn", "gender": "M", "born": null, "died": null, "parents": ["joe-ozburn", "bernadine-ozburn"] },
-    { "x": 1, "id": "mike-ozburn", "name": "Mike Ozburn", "gender": "M", "born": null, "died": null, "parents": ["bill-ozburn"] },
+    { "x": 1, "id": "mike-ozburn", "name": "Mike Ozburn", "gender": "M", "born": null, "died": null, "parents": ["bill-ozburn", "jerri-ozburn"] },
     { "x": 2, "id": "kris-rosenlund-ozburn", "name": "Kris Rosenlund Ozburn", "gender": "F", "born": null, "died": null, "parents": [] },
-    { "x": 3, "id": "mark-ozburn", "name": "Mark Ozburn", "gender": "M", "born": null, "died": null, "parents": ["bill-ozburn"] },
-    { "x": 4, "id": "margaret-ozburn-mixon", "name": "Margaret Ozburn Mixon", "gender": "F", "born": 1962, "died": null, "parents": ["bill-ozburn"] },
+    { "x": 3, "id": "mark-ozburn", "name": "Mark Ozburn", "gender": "M", "born": null, "died": null, "parents": ["bill-ozburn", "jerri-ozburn"] },
+    { "x": 4, "id": "margaret-ozburn-mixon", "name": "Margaret Ozburn Mixon", "gender": "F", "born": 1962, "died": null, "parents": ["bill-ozburn", "jerri-ozburn"] },
     { "x": 5, "id": "ron-mixon", "name": "Ron Mixon", "gender": "M", "born": 1963, "died": null, "parents": [] },
 
     // === Gen 8: Grandkids ===
@@ -82,7 +85,9 @@
     { "partners": ["william-w-ozburn", "nettie-catherine-wayman-ozburn"] },
     { "partners": ["michael-moffett", "frances-bischof-moffett"] },
     { "partners": ["ross-j-ozburn", "mary-agnes-moffett-ozburn"] },
+    { "partners": ["gerald-clayton-carter", "mae-louise-meredith-carter"] },
     { "partners": ["joe-ozburn", "bernadine-ozburn"] },
+    { "partners": ["bill-ozburn", "jerri-ozburn"] },
     { "partners": ["mike-ozburn", "kris-rosenlund-ozburn"] },
     { "partners": ["margaret-ozburn-mixon", "ron-mixon"] },
     { "partners": ["andrew-patterson", "katie-ozburn-patterson"] },
