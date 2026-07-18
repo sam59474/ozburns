@@ -145,9 +145,9 @@
     const maxDataX = Math.max(...allX);
     const dataRange = maxDataX - minDataX || 1;
 
-    // Map data x to pixel x. Use CARD_W spacing as the base unit.
-    // Each 1.0 unit of x = one card width + gap
-    const UNIT_PX = CARD_W + SIBLING_GAP;
+    // Map data x to pixel x.
+    // Each 1 unit of x = half a card width + half a gap (so 2 units = one full card slot)
+    const UNIT_PX = (CARD_W + SIBLING_GAP) / 2;
     const offsetX = 20; // left margin
 
     function dataXToPixelX(dataX) {
