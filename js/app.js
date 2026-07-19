@@ -21,6 +21,7 @@
   const COUPLE_GAP = 10;
   const SIBLING_GAP = 16;
   const RANK_SEP = 110;
+  const DEBUG = window.location.search.includes("debug");
 
   // Load family data
   try {
@@ -302,6 +303,7 @@
     card.innerHTML = `
       <div class="person-name">${person.name}</div>
       ${yearStr ? `<div class="person-years">${yearStr}</div>` : ""}
+      ${DEBUG ? `<div class="person-years" style="color:#F56600">[${person.x}]</div>` : ""}
     `;
 
     card.addEventListener("click", () => handleSelect(person.id, card));
