@@ -72,6 +72,29 @@ class FamilyGraph {
   }
 
   /**
+   * Check if two siblings are half-siblings (share exactly one parent, not both).
+   * Returns true if they share at least one parent but NOT all parents.
+   */
+  areHalfSiblings(idA, idB) {
+    const parentsA = this.getParents(idA);
+    const parentsB = this.getParents(idB);
+    if (parentsA.length === 0 || parentsB.length === 0) return false;
+
+    const shared = parentsA.filter(p => parentsB.includes(p));
+    if (shared.length === 0) return false;
+
+    // If either person has only one listed parent, and the other has two,
+    // and they share the one parent — that's a half-sibling
+    if (parentsA.length === 1 && parentsB.length === 2) return true;
+    if (parentsB.length === 1 && parentsA.length === 2) return true;
+
+    // If both have two parents but only share one
+    if (parentsA.length >= 2 && parentsB.length >= 2 && shared.length < 2) return true;
+
+    return false;
+  }
+
+  /**
    * Check if two people are married
    */
   areMarried(idA, idB) {
@@ -141,6 +164,28 @@ class FamilyGraph {
       return this.getSpouseLabel(personB);
     }
 
+    // Check step-parent: if B is married to one of A's parents, but B is NOT A's parent
+    const personA = this.people.get(idA);
+    if (personA && personA.parents.length > 0) {
+      for (const parentId of personA.parents) {
+        if (this.areMarried(parentId, idB) && !personA.parents.includes(idB)) {
+          const personB = this.people.get(idB);
+          return this.getStepParentLabel(personB);
+        }
+      }
+    }
+
+    // Check step-child: if A is married to one of B's parents, but A is NOT B's parent
+    const personBCheck = this.people.get(idB);
+    if (personBCheck && personBCheck.parents.length > 0) {
+      for (const parentId of personBCheck.parents) {
+        if (this.areMarried(parentId, idA) && !personBCheck.parents.includes(idA)) {
+          const personB = this.people.get(idB);
+          return this.getStepChildLabel(personB);
+        }
+      }
+    }
+
     // Check blood relationship first (takes priority over in-law)
     const blood = this.findBloodRelationship(idA, idB);
     if (blood) return blood;
@@ -173,6 +218,9 @@ class FamilyGraph {
     // Check siblings (including via sibling groups)
     if (this.areSiblings(idA, idB)) {
       const personB = this.people.get(idB);
+      if (this.areHalfSiblings(idA, idB)) {
+        return this.getHalfSiblingLabel(personB);
+      }
       return this.getSiblingLabel(personB);
     }
 
@@ -280,6 +328,33 @@ class FamilyGraph {
     if (person.gender === "M") return "brother";
     if (person.gender === "F") return "sister";
     return "sibling";
+  }
+
+  /**
+   * Get label for a half-sibling
+   */
+  getHalfSiblingLabel(person) {
+    if (person.gender === "M") return "half-brother";
+    if (person.gender === "F") return "half-sister";
+    return "half-sibling";
+  }
+
+  /**
+   * Get label for a step-parent
+   */
+  getStepParentLabel(person) {
+    if (person.gender === "M") return "stepfather";
+    if (person.gender === "F") return "stepmother";
+    return "step-parent";
+  }
+
+  /**
+   * Get label for a step-child
+   */
+  getStepChildLabel(person) {
+    if (person.gender === "M") return "stepson";
+    if (person.gender === "F") return "stepdaughter";
+    return "step-child";
   }
 
   /**
