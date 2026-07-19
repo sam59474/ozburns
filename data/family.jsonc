@@ -129,7 +129,7 @@
     { "x": 93, "id": "craig-weiner", "name": "Craig Weiner", "gender": "M", "born": 1965, "died": null, "parents": [] },
     { "x": 95, "id": "anne-ozburn-weiner", "name": "Anne Ozburn Weiner", "gender": "F", "born": 1965, "died": null, "parents": ["bert-ozburn", "carolyn-wood-ozburn"] },
     { "x": 97, "id": "mark-alan-meindl", "name": "Mark Alan Meindl", "gender": "M", "born": 1965, "died": null, "parents": [] },
-    { "x": 99, "id": "cynthia-ozburn-meindll", "name": "Cynthia Ozburn Meindll", "gender": "F", "born": 1966, "died": null, "parents": ["bert-ozburn", "carolyn-wood-ozburn"] },
+    { "x": 99, "id": "cynthia-ozburn-meindll", "name": "Cynthia Ozburn Meindl", "gender": "F", "born": 1966, "died": null, "parents": ["bert-ozburn", "carolyn-wood-ozburn"] },
     { "x": 101, "id": "julie-ozburn-schaldemos", "name": "Julie Ozburn Schaldemos", "gender": "F", "born": 1969, "died": null, "parents": ["bert-ozburn", "carolyn-wood-ozburn"] },
     { "x": 103, "id": "martin-schaldemos", "name": "Martin Schaldemos", "gender": "M", "born": 1973, "died": null, "parents": [] },
 
